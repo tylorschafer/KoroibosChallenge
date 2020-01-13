@@ -5,9 +5,9 @@ exports.up = function(knex) {
       table.increments('id').primary()
       table.string('name')
       table.string('sex')
-      table.integer('age')
-      table.integer('height')
-      table.integer('weight')
+      table.integer('age').nullable()
+      table.integer('height').nullable()
+      table.integer('weight').nullable()
       table.string('team')
       table.string('games')
       table.string('sport')
@@ -21,6 +21,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.droptTable('olympians')
+    knex.schema.dropTable('olympians')
   ])
 }
