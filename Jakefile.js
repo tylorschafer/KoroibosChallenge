@@ -43,3 +43,17 @@ task('eventImport', [], async function () {
   })
   console.log('Imported events successfully')
 })
+
+// desc('Import all olympian data.')
+// task('olympianImport', [], async function () {
+//   const data = await database('olympians').select('sport', 'event').distinct('event')
+//   data.forEach(async function (olympian) {
+//     const event = {
+//       name: olympian.event,
+//       sport: olympian.sport
+//     }
+//     console.log(event)
+//     await database('events').insert(event, 'id')
+//   })
+//   console.log('Imported events successfully')
+// })
