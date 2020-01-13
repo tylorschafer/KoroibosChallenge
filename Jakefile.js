@@ -23,7 +23,7 @@ task('2016SummerImport', [], function () {
         medal: row.Medal
       }
       console.log(data)
-      await database('2016_summer').insert(data, 'id')
+      await database('summer_2016').insert(data, 'id')
     })
     .on('end', () => {
       console.log('CSV file successfully migrated.')
