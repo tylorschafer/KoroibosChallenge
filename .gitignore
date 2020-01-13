@@ -1,0 +1,7 @@
+coverage
+node_modules
+db/migrations/20190128224204_initial.js
+db/migrations/20190128230157_add-publisher.js
+db/seeds/dev/papers.js
+routes/api/v1/papers.js
+tests/papers.spec.js
