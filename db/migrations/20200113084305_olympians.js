@@ -12,7 +12,7 @@ exports.up = function(knex) {
       table.string('games')
       table.string('sport')
       table.string('event')
-      table.string('medal')
+      table.string('medal').nullable()
 
       table.timestamps(true, true)
     })

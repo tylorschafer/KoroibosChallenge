@@ -20,7 +20,7 @@ task('2016SummerImport', [], function () {
         games: row.Games,
         sport: row.Sport,
         event: row.Event,
-        medal: row.Medal
+        medal: row.Medal === 'NA' ? null : row.Medal
       }
       console.log(data)
       await database('summer_2016').insert(data, 'id')
@@ -46,12 +46,11 @@ task('eventImport', [], async function () {
 
 desc('Import all olympian data.')
 task('olympianImport', [], async function () {
-  const data = await database('summer_2016')
+  const winnerData = await database('summer_2016')
     .select('name', 'team', 'age', 'sport')
     .groupBy('name', 'team', 'age', 'sport')
     .count('medal AS medal_count')
-    .whereNot({ medal: 'NA' })
-  data.forEach(async function (olympianData) {
+  winnerData.forEach(async function (olympianData) {
     const olympian = {
       name: olympianData.name,
       team: olympianData.team,
