@@ -46,12 +46,12 @@ task('eventImport', [], async function () {
 
 desc('Import all olympian data.')
 task('olympianImport', [], async function () {
-  const data = await database('summer_2016')
+  const winnerData = await database('summer_2016')
     .select('name', 'team', 'age', 'sport')
     .groupBy('name', 'team', 'age', 'sport')
     .count('medal AS medal_count')
     .whereNot({ medal: 'NA' })
-  data.forEach(async function (olympianData) {
+  winnerData.forEach(async function (olympianData) {
     const olympian = {
       name: olympianData.name,
       team: olympianData.team,
@@ -62,5 +62,21 @@ task('olympianImport', [], async function () {
     console.log(olympian)
     await database('olympians').insert(olympian, 'id')
   })
+  const otherData = await database('summer_2016')
+    .select('name', 'team', 'age', 'sport')
+    .groupBy('name', 'team', 'age', 'sport')
+    .where({ medal: 'NA' })
+  otherData.forEach(async function(olympianData) {
+    const olympian = {
+      name: olympianData.name,
+      team: olympianData.team,
+      age: olympianData.age,
+      sport: olympianData.sport,
+      total_medals_won: 0
+    }
+    console.log(olympian)
+    await database('olympians').insert(olympian, 'id')
+  })
   console.log('Imported events successfully')
+  
 })
