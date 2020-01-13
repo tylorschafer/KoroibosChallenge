@@ -6,11 +6,11 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 desc('Import all olympian data.')
-task('olympianImport', [], function () {
+task('2016SummerImport', [], function () {
   fs.createReadStream('db/data/olympic_data_2016.csv')
     .pipe(csv())
     .on('data', async (row) => {
-      const olympian = {
+      const data = {
         name: row.Name,
         sex: row.Sex,
         age: isNaN(row.Age) ? null : parseInt(row.Age),
@@ -22,8 +22,8 @@ task('olympianImport', [], function () {
         event: row.Event,
         medal: row.Medal
       }
-      console.log(olympian)
-      await database('olympians').insert(olympian, 'id')
+      console.log(data)
+      await database('2016_summer').insert(data, 'id')
     })
     .on('end', () => {
       console.log('CSV file successfully migrated.')
