@@ -20,7 +20,7 @@ exports.up = function(knex) {
 }
 
 exports.down = function(knex) {
-  // return Promise.all([
-  //   knex.schema.dropTable('summer_2016)
-  // ])
+  return Promise.all([
+    knex.schema.dropTable('summer_2016')
+  ])
 }
