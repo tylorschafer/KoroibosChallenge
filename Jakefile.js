@@ -5,7 +5,7 @@ const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
-desc('Import all olympian data.')
+desc('Import all 2016 Summer olympic data.')
 task('2016SummerImport', [], function () {
   fs.createReadStream('db/data/olympic_data_2016.csv')
     .pipe(csv())
@@ -32,11 +32,11 @@ task('2016SummerImport', [], function () {
 
 desc('Import all event data.')
 task('eventImport', [], async function () {
-  const data = await database('olympians').select('sport', 'event').distinct('event')
-  data.forEach(async function (olympian) {
+  const data = await database('2016_summer').select('sport', 'event').distinct('event')
+  data.forEach(async function (eventData) {
     const event = {
-      name: olympian.event,
-      sport: olympian.sport
+      name: eventData.event,
+      sport: eventData.sport
     }
     console.log(event)
     await database('events').insert(event, 'id')
@@ -44,16 +44,23 @@ task('eventImport', [], async function () {
   console.log('Imported events successfully')
 })
 
-// desc('Import all olympian data.')
-// task('olympianImport', [], async function () {
-//   const data = await database('olympians').select('sport', 'event').distinct('event')
-//   data.forEach(async function (olympian) {
-//     const event = {
-//       name: olympian.event,
-//       sport: olympian.sport
-//     }
-//     console.log(event)
-//     await database('events').insert(event, 'id')
-//   })
-//   console.log('Imported events successfully')
-// })
+desc('Import all olympian data.')
+task('olympianImport', [], async function () {
+  const data = await database('2016_summer')
+    .select('name', 'team', 'age', 'sport')
+    .groupBy('name', 'team', 'age', 'sport')
+    .count('medal AS medal_count')
+    .whereNot({ medal: 'NA' })
+  data.forEach(async function (olympianData) {
+    const olympian = {
+      name: olympianData.name,
+      team: olympianData.team,
+      age: olympianData.age,
+      sport: olympianData.sport,
+      total_medals_won: parseInt(olympianData.medal_count)
+    }
+    console.log(olympian)
+    await database('olympians').insert(olympian, 'id')
+  })
+  console.log('Imported events successfully')
+})
