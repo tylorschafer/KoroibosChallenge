@@ -6,14 +6,20 @@ describe('Test olympians model', () => {
   beforeEach(async () => {
     await database.raw('truncate table events cascade')
 
+    const watersports = {
+      name: 'Watersports'
+    }
+
+    const sport = await database('sports').insert(watersports, 'id')
+
     const event1 = {
       name: 'Underwater Basket Weaving',
-      sport: 'Watersports'
+      sport_id: sport.id
     }
 
     const event2 = {
       name: 'Synchronized Swimming',
-      sport: 'Watersports'
+      sport_id: sport.id
     }
     await database('events').insert(event1, 'id')
     await database('events').insert(event2, 'id')
@@ -29,9 +35,7 @@ describe('Test olympians model', () => {
 
       expect(events.length).toBe(2)
       expect(events[0].name).toBe('Underwater Basket Weaving')
-      expect(events[0].sport).toBe('Watersports')
       expect(events[1].name).toBe('Synchronized Swimming')
-      expect(events[1].sport).toBe('Watersports')
     })
   })
 })
