@@ -30,13 +30,27 @@ task('2016SummerImport', [], function () {
     })
 })
 
+desc('Import all sport data.')
+task('sportImport', [], async function () {
+  const data = await database('summer_2016').select('sport').distinct('sport')
+  data.forEach(async function (sportData) {
+    const sport = {
+      name: sportData.sport
+    }
+    console.log(sport)
+    await database('sports').insert(sport, 'id')
+  })
+  console.log('Imported events successfully')
+})
+
 desc('Import all event data.')
 task('eventImport', [], async function () {
   const data = await database('summer_2016').select('sport', 'event').distinct('event')
   data.forEach(async function (eventData) {
+    const sportId = await database('sports').where('name', eventData.sport)
     const event = {
       name: eventData.event,
-      sport: eventData.sport
+      sport_id: sportId[0].id
     }
     console.log(event)
     await database('events').insert(event, 'id')
