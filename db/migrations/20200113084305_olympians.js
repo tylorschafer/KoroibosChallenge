@@ -13,8 +13,6 @@ exports.up = function(knex) {
       table.string('sport')
       table.string('event')
       table.string('medal').nullable()
-
-      table.timestamps(true, true)
     })
   ])
 }
