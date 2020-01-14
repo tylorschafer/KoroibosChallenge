@@ -13,7 +13,7 @@ describe('Test the events path', () => {
     await database.raw('truncate table sports cascade')
     await database.raw('truncate table events cascade')
     await database.raw('truncate table olympians cascade')
-    await database.raw('truncate table olympianEvents cascade')
+    await database.raw('truncate table olympian_events cascade')
 
     const sport = {
       name: 'Basketball'
@@ -40,8 +40,8 @@ describe('Test the events path', () => {
     const tylor = await database('olympians').insert(player, 'id')
 
     const olympianEvent = {
-      event_id: point3.id,
-      olympian_id: tylor.id,
+      event_id: point3[0],
+      olympian_id: tylor[0],
       medal: 'Gold'
     }
     await database('olympian_events').insert(olympianEvent, 'id')
@@ -51,15 +51,16 @@ describe('Test the events path', () => {
     database.raw('truncate table sports cascade')
     database.raw('truncate table events cascade')
     database.raw('truncate table olympians cascade')
-    database.raw('truncate table olympianEvents cascade')
+    database.raw('truncate table olympian_events cascade')
   })
 
   describe('test event medalists GET', () => {
     it('happy path', async () => {
       const response = await request(app)
-        .get(`/api/v1/events/${point3}/medalists`)
+        .get(`/api/v1/events/${point3[0]}/medalists`)
 
       const results = response.body
+
 
       expect(response.statusCode).toBe(200)
 
