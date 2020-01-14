@@ -27,6 +27,8 @@ describe('Test the events path', () => {
       const response = await request(app)
         .get("/api/v1/events")
 
+      console.log(response.body)
+
       const results = response.body.events
 
       expect(response.statusCode).toBe(200)
