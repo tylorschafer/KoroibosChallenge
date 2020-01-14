@@ -8,8 +8,6 @@ exports.up = function(knex) {
       table.integer('age').nullable()
       table.string('sport')
       table.integer('total_medals_won')
-
-      table.timestamps(true, true)
     })
   ])
 };
