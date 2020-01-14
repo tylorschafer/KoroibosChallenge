@@ -1,18 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-const environment = process.env.NODE_ENV || 'development'
-const configuration = require('../../../knexfile')[environment]
-const database = require('knex')(configuration)
+const SportEvents = require('../../../formatters/sportEventsFormatter')
 
-router.get('/', (request, response) => {
-  database('events').select()
-    .then((events) => {
-      response.status(200).json({ events: events })
-    })
-    .catch((error) => {
-      response.status(500).json({ error })
-    })
+router.get('/', async (request, response) => {
+  const events = await new SportEvents().eventsFormat()
+  return response.status(200).json({ events: events })
 })
 
 module.exports = router;
