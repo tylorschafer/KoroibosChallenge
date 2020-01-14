@@ -30,25 +30,25 @@ describe('Test the olympians path', () => {
       const response = await request(app)
         .get("/api/v1/olympians")
 
-      const res = response.olympians
+      const results = response.body.olympians
 
       expect(response.statusCode).toBe(200)
-      expect(res.body.length).toBe(1)
+      expect(results.length).toBe(1)
 
-      expect(res.body[0]).toHaveProperty('name')
-      expect(res.body[0].name).toBe('Tylor')
+      expect(results[0]).toHaveProperty('name')
+      expect(results[0].name).toBe('Tylor')
       
-      expect(res.body[0]).toHaveProperty('team')
-      expect(res.body[0].team).toBe('USA')
+      expect(results[0]).toHaveProperty('team')
+      expect(results[0].team).toBe('USA')
 
-      expect(res.body[0]).toHaveProperty('age')
-      expect(res.body[0].name).toBe(29)
+      expect(results[0]).toHaveProperty('age')
+      expect(results[0].age).toBe(29)
 
-      expect(res.body[0]).toHaveProperty('sport')
-      expect(res.body[0].sport).toBe('Underwater Basket Weaving')
+      expect(results[0]).toHaveProperty('sport')
+      expect(results[0].sport).toBe('Underwater Basket Weaving')
 
-      expect(res.body[0]).toHaveProperty('total_medals_won')
-      expect(res.body[0].total_medals_won).toBe(64)
+      expect(results[0]).toHaveProperty('total_medals_won')
+      expect(results[0].total_medals_won).toBe(64)
     })
   })
 })
