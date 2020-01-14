@@ -13,7 +13,7 @@ describe('Test the events path', () => {
     await database.raw('truncate table sports cascade');
 
     const sport = {
-      name: 'basketball'
+      name: 'Basketball'
     }
 
     await database('sports').insert(sport, 'id')
@@ -36,8 +36,6 @@ describe('Test the events path', () => {
     it('happy path', async () => {
       const response = await request(app)
         .get("/api/v1/events")
-
-      console.log(response.body)
 
       const results = response.body.events
 
