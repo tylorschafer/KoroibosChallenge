@@ -5,6 +5,7 @@ exports.up = function(knex) {
       table.increments('id').primary()
       table.integer('event_id').unsigned().references('id').inTable('events')
       table.integer('olympian_id').unsigned().references('id').inTable('olympians')
+      table.string('medal')
     })
   ])
 }
