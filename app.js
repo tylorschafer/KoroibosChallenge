@@ -21,5 +21,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/v1/olympians', olympiansRouter)
 app.use('/api/v1/events', eventsRouter)
+app.use('/api/v1/events', eventsRouter)
 
 module.exports = app;
