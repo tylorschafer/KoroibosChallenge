@@ -10,16 +10,26 @@ const database = require('knex')(configuration);
 describe('Test the events path', () => {
   beforeEach(async () => {
     await database.raw('truncate table events cascade');
+    await database.raw('truncate table sports cascade');
+
+    const sport = {
+      name: 'basketball'
+    }
+
+    await database('sports').insert(sport, 'id')
+
+    const basketball = await database('sports').where('name', await sport.name)
 
     const tylor = {
       name: '3 point contest',
-      sport: 'Basketball'
+      sport_id: basketball[0].id
     }
     await database('events').insert(tylor, 'id')
   })
 
   afterEach(() => {
     database.raw('truncate table events cascade')
+    database.raw('truncate table sports cascade')
   })
 
   describe('test events GET', () => {
