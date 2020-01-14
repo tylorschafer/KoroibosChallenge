@@ -11,6 +11,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return Promise.all([
-    knex.schema.dropTable('events')
+    knex.schema.dropTable('olympian_events')
   ])
 }
