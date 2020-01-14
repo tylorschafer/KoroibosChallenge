@@ -84,7 +84,6 @@ task('olympianEventsImport', [], async function () {
     .select('name', 'team', 'age', 'sport', 'event')
     .groupBy('name', 'team', 'age', 'sport', 'event')
   data.forEach(async function (olympianData) {
-    console.log(olympianData)
     const eventId = await database('events').where('name', olympianData.event)
     const olympianId = await database('olympians').where('name', olympianData.name)
     const olympianEvent = {
