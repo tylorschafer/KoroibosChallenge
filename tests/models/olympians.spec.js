@@ -34,6 +34,11 @@ describe('Test olympians model', () => {
       const olympians = await database('olympians').select()
 
       expect(olympians.length).toBe(2)
+      expect(olympians[0].name).toBe('Tylor')
+      expect(olympians[0].team).toBe('USA')
+      expect(olympians[0].age).toBe(29)
+      expect(olympians[0].sport).toBe('Underwater Basket Weaving')
+      expect(olympians[0].total_medals_won).toBe(64)
     })
   })
 })
