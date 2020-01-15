@@ -1,11 +1,10 @@
-var express = require('express');
-var router = express.Router();
-
-const environment = process.env.NODE_ENV || 'development'
-const configuration = require('../../../knexfile')[environment]
-const database = require('knex')(configuration)
+var express = require('express')
+var router = express.Router()
 
 const SportEvents = require('../../../formatters/sportEventsFormatter')
+
+const EventModel = require('../../../models/event')
+const Event = new EventModel()
 
 router.get('/', async (request, response) => {
   const events = await new SportEvents().eventsFormat()
@@ -13,12 +12,8 @@ router.get('/', async (request, response) => {
 })
 
 router.get('/:id/medalists', async (request, response) => {
-  const event = await database('events').where('id', request.params.id)
-  const medalists = await database('olympian_events')
-    .innerJoin('olympians', 'olympian_id', 'olympians.id')
-    .select('olympians.name', 'olympians.team', 'olympians.age', 'olympian_events.medal')
-    .where('olympian_events.event_id', request.params.id)
-    .whereNot('medal', null)
+  const event = await Event.find(request.params.id)
+  const medalists = await Event.medalists(request.params.id)
   response.status(200).json({ event: event[0].name, medalists: medalists })
 })
 
