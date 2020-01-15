@@ -15,7 +15,7 @@ task('2016SummerImport', [], function () {
         sex: row.Sex,
         age: isNaN(row.Age) ? null : parseInt(row.Age),
         height: isNaN(row.Height) ? null : parseInt(row.Height),
-        weight: isNaN(row.weight) ? null : parseInt(row.Weight),
+        weight: isNaN(row.Weight) ? null : parseInt(row.Weight),
         team: row.Team,
         games: row.Games,
         sport: row.Sport,
