@@ -6,10 +6,10 @@ var logger = require('morgan');
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 
-var indexRouter = require('./routes/index');
-var olympiansRouter = require('./routes/api/v1/olympians')
-var olympianStatsRouter = require('./routes/api/v1/olympianStats')
-var eventsRouter = require('./routes/api/v1/events')
+var indexRouter = require('./controllers/index');
+var olympiansRouter = require('./controllers/api/v1/olympiansController')
+var olympianStatsRouter = require('./controllers/api/v1/olympianStatsController')
+var eventsRouter = require('./controllers/api/v1/eventsController')
 
 var app = express();
 
