@@ -17,4 +17,4 @@ router.get('/:id/medalists', async (request, response) => {
   response.status(200).json({ event: event[0].name, medalists: medalists })
 })
 
-module.exports = router;
+module.exports = router
