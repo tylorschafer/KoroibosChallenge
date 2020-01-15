@@ -14,6 +14,13 @@ class Event {
   find (id) {
     return database('events').where('id', id)
   }
+
+  findAllBySport(sportId) {
+    return database('events')
+      .where('sport_id', sportId)
+      .pluck('name')
+      .then((result) => result)
+  }
 }
 
 module.exports = Event
