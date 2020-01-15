@@ -10,6 +10,7 @@ const database = require('knex')(configuration);
 describe('Test the olympian_stats path', () => {
   beforeEach(async () => {
     await database.raw('truncate table summer_2016 cascade');
+    await database.raw('truncate table olympians cascade');
 
     const olymp1 = {
       name: 'Moe',
@@ -64,6 +65,7 @@ describe('Test the olympian_stats path', () => {
 
   afterEach(() => {
     database.raw('truncate table summer_2016 cascade')
+    database.raw('truncate table olympians cascade')
   })
 
   describe('test olympians_stats GET', () => {
@@ -74,9 +76,6 @@ describe('Test the olympian_stats path', () => {
       const results = response.body
 
       expect(response.statusCode).toBe(200)
-
-      expect(results.olympian_stats).toHaveProperty('total_competing_olympians')
-      expect(results.olympian_stats.total_competing_olympians).toBe(3)
       
       expect(results.olympian_stats).toHaveProperty('average_weight')
       expect(results.olympian_stats.average_weight).toHaveProperty('unit')
