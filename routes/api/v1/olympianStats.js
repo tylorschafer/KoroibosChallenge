@@ -9,13 +9,13 @@ router.get('/', async (request, response) => {
   const maleWeights = await database('summer_2016')
     .groupBy('name', 'weight', 'height', 'age')
     .where('sex', 'M')
-    .avg('weight')
+    .whereNot('weight', null)
     .pluck('weight')
 
   const femaleWeights = await database('summer_2016')
     .groupBy('name', 'weight', 'height', 'age')
     .where('sex', 'F')
-    .avg('weight')
+    .whereNot('weight', null)
     .pluck('weight')
 
   const ages = await database('summer_2016')
@@ -23,6 +23,8 @@ router.get('/', async (request, response) => {
     .pluck('age')
 
   const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length
+
+  console.log(maleWeights)
 
   response.status(200).json({
     olympian_stats: {

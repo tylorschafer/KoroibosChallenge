@@ -50,8 +50,6 @@ describe('Test the olympiansAge path', () => {
 
       const results = response.body
 
-      console.log(results)
-
       expect(response.statusCode).toBe(200)
       expect(results.length).toBe(1)
 
