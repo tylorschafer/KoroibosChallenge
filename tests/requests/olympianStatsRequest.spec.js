@@ -73,8 +73,6 @@ describe('Test the olympian_stats path', () => {
 
       const results = response.body
 
-      console.log(results)
-
       expect(response.statusCode).toBe(200)
 
       expect(results.olympian_stats).toHaveProperty('total_competing_olympians')
