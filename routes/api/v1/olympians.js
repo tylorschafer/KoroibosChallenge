@@ -5,20 +5,13 @@ const environment = process.env.NODE_ENV || 'development'
 const configuration = require('../../../knexfile')[environment]
 const database = require('knex')(configuration)
 
+const OlympianModel = require('../../../models/olympian.js')
+const Olympian = new OlympianModel()
+
 router.get('/', async (request, response) => {
   if (Object.keys(request.query).includes('age')) {
-    const maxAge = await database('olympians').max('age')
-    const minAge = await database('olympians').min('age')
-    if (request.query.age === 'oldest') {
-      database('olympians').where('age', maxAge[0].max)
-        .then((olympians) => {
-          response.status(200).json(olympians)
-        })
-        .catch((error) => {
-          response.status(500).json({ error })
-        })
-    } else if (request.query.age === 'youngest') {
-      database('olympians').where('age', minAge[0].min)
+    if (request.query.age === 'oldest' || request.query.age == 'youngest') {
+      Olympian.ageSearch(request.query.age)
         .then((olympians) => {
           response.status(200).json(olympians)
         })
@@ -29,7 +22,7 @@ router.get('/', async (request, response) => {
       response.status(200).json({ error: 'Incorrect Query Parameter' })
     }
   } else {
-    database('olympians').select('name', 'team', 'age', 'sport', 'total_medals_won')
+    Olympian.all()
       .then((olympians) => {
         response.status(200).json({ olympians })
       })

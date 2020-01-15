@@ -24,8 +24,6 @@ router.get('/', async (request, response) => {
 
   const average = arr => arr.reduce((a, b) => a + b, 0) / arr.length
 
-  console.log(maleWeights)
-
   response.status(200).json({
     olympian_stats: {
       total_competing_olympians: ages.length,
