@@ -9,7 +9,7 @@ const database = require('knex')(configuration);
 
 describe('Test the olympian_stats path', () => {
   beforeEach(async () => {
-    await database.raw('truncate table sumer_2016 cascade');
+    await database.raw('truncate table summer_2016 cascade');
 
     const olymp1 = {
       name: 'Moe',
@@ -71,7 +71,9 @@ describe('Test the olympian_stats path', () => {
       const response = await request(app)
         .get("/api/v1/olympian_stats")
 
-      const results = response.body.olympian_stats
+      const results = response.body
+
+      console.log(results)
 
       expect(response.statusCode).toBe(200)
 
@@ -88,8 +90,8 @@ describe('Test the olympian_stats path', () => {
       expect(results.olympian_stats.average_weight).toHaveProperty('female_olympians')
       expect(results.olympian_stats.average_weight.female_olympians).toBe(130)
 
-      expect(results).toHaveProperty('average_age')
-      expect(results.average_age).toBe(23.7)
+      expect(results.olympian_stats).toHaveProperty('average_age')
+      expect(results.olympian_stats.average_age).toBe(23.7)
     })
   })
 })
