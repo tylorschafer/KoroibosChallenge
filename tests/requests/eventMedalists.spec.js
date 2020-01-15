@@ -8,7 +8,7 @@ const database = require('knex')(configuration);
 
 let point3
 
-describe('Test the events path', () => {
+describe('Test the event medalists path', () => {
   beforeEach(async () => {
     await database.raw('truncate table sports cascade')
     await database.raw('truncate table events cascade')
